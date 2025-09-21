@@ -1,49 +1,103 @@
-# Sample Hardhat Project
+# verify-contract
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a Hardhat Ignition module that deploys that contract.
+How to verify smart contracts using **Etherscan V2 API**
 
-Try running some of the following tasks:
+---
 
-```shell
-npx hardhat help
-npx hardhat test
-REPORT_GAS=true npx hardhat test
-npx hardhat node
-npx hardhat ignition deploy ./ignition/modules/Lock.js
-```
+## Overview
 
-Deploying OmniLend to ZetaChain Testnet...
-✅ OmniLend deployed to: 0x589C1494089889C077d7AbBA17B40575E961cC8c
+This repository provides a sample project using **Hardhat** + **Etherscan V2 API** to deploy and verify smart contracts on Etherscan. It includes scripts and configuration needed to automatically submit your contract's source code, compiler settings, etc., for verification.
 
+---
 
+## Features
 
-Deploying OmniLend to Base mainnet...
-✅ OmniLend deployed to: 0x08f3fe12B7c79D9e618BD41212b1246d7141B47B
-Successfully submitted source code for contract
-contracts/OmniLend.sol:OmniLend at 0x08f3fe12B7c79D9e618BD41212b1246d7141B47B
-for verification on the block explorer. Waiting for verification result...
+- Sample Solidity contracts under `contracts/`
+- Deployment scripts
+- Verification script using Etherscan V2 API
+- Configuration for networks / Etherscan API key
+- Contract address tracking (`contract-addresses.txt`)
 
-Successfully verified contract OmniLend on the block explorer.
-https://basescan.org/address/0x08f3fe12B7c79D9e618BD41212b1246d7141B47B#code
+---
 
-Successfully verified contract OmniLend on Sourcify.
-https://repo.sourcify.dev/contracts/full_match/8453/0x08f3fe12B7c79D9e618BD41212b1246d7141B47B/
+## Prerequisites
 
+- Node.js (v18+ recommended)
+- npm or yarn or pnpm
+- Hardhat
+- An Etherscan API key
+- Network(s) configured in Hardhat to target (e.g. Ethereum mainnet, testnets, or others)
 
+---
 
-Deploying ConnectedContract to base...
-✅ ConnectedContract deployed to base: 0x706fe559D3Cabb4213F39Afa7e67B740B09F5084
+## Setup
 
-📝 To verify on Base Explorer:
-npx hardhat verify --network base 0x706fe559D3Cabb4213F39Afa7e67B740B09F5084
-Successfully submitted source code for contract
-contracts/ConnectedContract.sol:ConnectedContract at 0x706fe559D3Cabb4213F39Afa7e67B740B09F5084
-for verification on the block explorer. Waiting for verification result...
+1. Clone the repository:
 
-Successfully verified contract ConnectedContract on the block explorer.
-https://basescan.org/address/0x706fe559D3Cabb4213F39Afa7e67B740B09F5084#code
+   ```sh
+   git clone https://github.com/holyaustin/verify-contract.git
+   cd verify-contract
+Install dependencies:
 
-The contract 0x706fe559D3Cabb4213F39Afa7e67B740B09F5084 has already been verified on Sourcify.
-https://repo.sourcify.dev/contracts/full_match/8453/0x706fe559D3Cabb4213F39Afa7e67B740B09F5084/
+```sh
+Copy code
+npm install
+# or
+yarn
+Create .env file from .env copy and fill in the required variables:
 
-Verification successful
+```text
+Copy code
+ETHERSCAN_API_KEY=your_etherscan_api_key
+# other network keys or RPC endpoints if needed
+Configure hardhat.config.js to include the networks you plan to deploy & verify to.
+
+# Usage
+Deploy
+```sh
+Copy code
+npx hardhat run scripts/deploy.js --network <your_network>
+This will deploy your contract and record the address into contract-addresses.txt.
+
+Verify
+```sh
+Copy code
+npx hardhat run scripts/verify.js --network <your_network> --contract <ContractName> --address <contract_address>
+Alternatively, you can configure your verification script to read from the contract-addresses.txt and automatically pick up the addresses.
+
+### Etherscan V2 API
+Etherscan V2 API
+
+This project uses Etherscan V2 API for verification, which allows submitting:
+
+contract source code
+
+compiler version
+
+optimizer settings
+
+license type
+
+constructor arguments (if any)
+
+Make sure your Hardhat build output matches exactly what you submit for verification (contract name, solidity version, etc.)
+
+Troubleshooting
+
+API rate limits: The Etherscan API has limits. If you get rate-limited, you may need to wait or upgrade your plan.
+
+Mismatched compiler settings: If verification fails, double-check that the compiler version/optimizer settings in your Hardhat config are exactly what you used in the contract.
+
+Flattened contracts or imports: If you have multiple files or imports, ensure the source file structure matches what Etherscan expects (or use a standard flattening process).
+
+Constructor args: If your contract constructor takes arguments, you’ll need to pass them (in ABI/encoded form) during verification.
+
+Contributing
+
+Feel free to open issues or pull requests. Some ideas:
+
+Add examples for different networks (Polygon, BSC, etc.)
+
+Support more Etherscan-like block explorers
+
+Better error handling / retries
