@@ -1,0 +1,65 @@
+ npx hardhat run scripts/deploy-connected.js --network baseSepolia
+
+ npx hardhat run scripts/deploy-connected.js --network baseMainnet
+
+ npx hardhat run scripts/deploy-connected.js --network etherlink
+
+   // Optional: Print Etherscan verification command
+  console.log("\n📝 To verify on Etherlink Explorer:");
+
+npx hardhat verify \
+  --network baseSepolia \
+  0x50A2d89D9d1aC0D0BcB91e362ED49B01ef59D35e \
+  0x0c487a766110c85d301d96e33579c5b317fa4995 \
+  0x589C1494089889C077d7AbBA17B40575E961cC8c
+
+
+✅ ConnectedContract deployed to baseSepolia: 0xcc68Ce1342B91cC9A1F97e8863c77465910f2e63 
+
+npx hardhat verify --network mainnet DEPLOYED_CONTRACT_ADDRESS "Constructor argument 1"
+
+
+✅ ConnectedContract deployed to baseMainnet: 0x636B873B56eE793Cc2707d93d13Ae6e04EA6E769
+
+npx hardhat verify \
+  --network baseMainnet \
+  0x636B873B56eE793Cc2707d93d13Ae6e04EA6E769 \
+  "0x0c487a766110c85d301d96e33579c5b317fa4995" \
+  "0x589C1494089889C077d7AbBA17B40575E961cC8c"
+
+  The contract 0x636B873B56eE793Cc2707d93d13Ae6e04EA6E769 has already been verified on Sourcify.
+https://repo.sourcify.dev/contracts/full_match/8453/0x636B873B56eE793Cc2707d93d13Ae6e04EA6E769/
+
+
+  Deploying ConnectedContract to etherlink...
+✅ ConnectedContract deployed to etherlink: 0x6F10092DCAA94e2165Cf99072929D7838b58c4b5
+
+Successfully verified contract ConnectedContract on the block explorer.
+https://explorer.etherlink.com/address/0x6F10092DCAA94e2165Cf99072929D7838b58c4b5#code
+
+https://repo.sourcify.dev/contracts/full_match/42793/0x6F10092DCAA94e2165Cf99072929D7838b58c4b5/
+
+
+ npx hardhat run scripts/deploy.js --network baseMainnet
+
+ npx hardhat run scripts/deploy.js --network etherlink
+
+ Deploying OmniLend to ethelink..
+✅ OmniLend deployed to: 0xB894b41d184FC98B0dABc619C4BcCd0cfEEC6B94
+
+npx hardhat verify \
+  --network etherlink \
+  0xB894b41d184FC98B0dABc619C4BcCd0cfEEC6B94
+
+
+
+
+  Deploying OmniLend to baseMainnet...
+✅ OmniLend deployed to: 0x290bE182F03fAB903625D281207594918C945Bc2 or
+0x1D170baD9955AeEf954CD1c135a1d182c68a1c36
+
+npx hardhat verify \
+  --network baseMainnet \
+  0x1D170baD9955AeEf954CD1c135a1d182c68a1c36
+
+  https://repo.sourcify.dev/contracts/full_match/8453/0x1D170baD9955AeEf954CD1c135a1d182c68a1c36/
